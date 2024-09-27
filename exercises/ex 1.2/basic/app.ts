@@ -8,10 +8,10 @@ const app = express();
 
 let getRequestCount = 0;
 
-app.use((req,res,next) => {
+app.use((req,_res,next) => {
     if(req.method === 'GET'){
         getRequestCount++;
-          console.log('Nombre de requêtes GET depuis le démarrage du serveur :${getRequestCount}');
+          console.log('GET counter : ' +getRequestCount);
     }
     next();
     
