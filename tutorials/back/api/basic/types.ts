@@ -19,8 +19,11 @@ interface Drink {
   price: number;
 }
 
+type NewDrink = Omit<Drink, "id">;
 
-export type { Pizza, NewPizza, PizzaToUpdate, Drink };
+export type { Pizza, NewPizza, PizzaToUpdate, Drink, NewDrink };
+
+
 
 
 
