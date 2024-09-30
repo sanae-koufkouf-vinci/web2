@@ -59,4 +59,17 @@ router.get("/:id", (req, res) => {
   return res.json(drink);
 });
 
+
+router.get("/", (req, res) => {
+  if (!req.query["budget-max"]) {
+    // Cannot call req.query.budget-max as "-" is an operator
+    return res.json(drinks);
+  }
+  const budgetMax = Number(req.query["budget-max"]);
+  const filteredDrinks = drinks.filter((drink) => {
+    return drink.price <= budgetMax;
+  });
+  return res.json(filteredDrinks);
+});
+
 export default router;
