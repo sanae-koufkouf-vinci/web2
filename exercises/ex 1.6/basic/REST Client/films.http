@@ -1,0 +1,23 @@
+### Read all drinks
+GET http://localhost:3000/films
+
+
+### Read all films with a duration of minimum 
+GET http://localhost:3000/films/?minimum-duration=150
+
+### Read a single film 
+GET http://localhost:3000/films/3
+
+### Create a film
+POST http://localhost:3000/films
+Content-Type: application/json
+
+{
+    "title":"The maze runner",
+    "director":"https://the_maze_runner.jpg",
+    "duration":148,
+    "budget":100   
+}
+
+### Delete a film
+DELETE http://localhost:3000/films/2
