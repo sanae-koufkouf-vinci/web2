@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { Drink, NewDrink } from "../types";
 
-const drinks: Drink[] = [
+import path from "node:path";
+import { parse, serialize } from "../utils/json";
+const jsonDbPath = path.join(__dirname, "/../data/drinks.json");
+
+const defaultDrinks: Drink[] = [
   {
     id: 1,
     title: "Coca-Cola",
@@ -46,21 +50,8 @@ const drinks: Drink[] = [
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  return res.json(drinks);
-});
-
-router.get("/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const drink = drinks.find((drink) => drink.id === id);
-  if (!drink) {
-    return res.sendStatus(404);
-  }
-  return res.json(drink);
-});
-
-
 router.get("/", (req, res) => {
+  const drinks = parse(jsonDbPath, defaultDrinks);
   if (!req.query["budget-max"]) {
     // Cannot call req.query.budget-max as "-" is an operator
     return res.json(drinks);
@@ -70,6 +61,17 @@ router.get("/", (req, res) => {
     return drink.price <= budgetMax;
   });
   return res.json(filteredDrinks);
+});
+
+
+router.get("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const drinks = parse(jsonDbPath, defaultDrinks);
+  const drink = drinks.find((drink) => drink.id === id);
+  if (!drink) {
+    return res.sendStatus(404);
+  }
+  return res.json(drink);
 });
 
 router.post("/", (req, res) => {
@@ -95,8 +97,10 @@ router.post("/", (req, res) => {
 
   const { title, image, volume, price } = body as NewDrink;
 
+  const drinks = parse(jsonDbPath, defaultDrinks);
+
   const nextId =
-    drinks.reduce((maxId, drink) => (drink.id > maxId ? drink.id : maxId), 0) +
+    defaultDrinks.reduce((maxId, drink) => (drink.id > maxId ? drink.id : maxId), 0) +
     1;
 
   const newDrink: Drink = {
@@ -108,22 +112,26 @@ router.post("/", (req, res) => {
   };
 
   drinks.push(newDrink);
+  serialize(jsonDbPath,drinks);
   return res.json(newDrink);
 });
 
 router.delete("/:id", (req, res) => {
   const id = Number(req.params.id);
-  const index = drinks.findIndex((drink) => drink.id === id);
+  const drinks = parse(jsonDbPath, defaultDrinks);
+  const index = defaultDrinks.findIndex((drink) => drink.id === id);
   if (index === -1) {
     return res.sendStatus(404);
   }
   const deletedElements = drinks.splice(index, 1); // splice() returns an array of the deleted elements
+  serialize(jsonDbPath,drinks);
   return res.json(deletedElements[0]);
 });
 
 
 router.patch("/:id", (req, res) => {
   const id = Number(req.params.id);
+  const drinks = parse(jsonDbPath, defaultDrinks);
   const drink = drinks.find((drink) => drink.id === id);
   if (!drink) {
     return res.sendStatus(404);
@@ -159,6 +167,7 @@ router.patch("/:id", (req, res) => {
   if (price) {
     drink.price = price;
   }
+  serialize(jsonDbPath,drinks);
 
   return res.json(drink);
 });
