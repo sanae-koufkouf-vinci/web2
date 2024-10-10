@@ -1,0 +1,67 @@
+
+@baseUrl = http://localhost:3000
+
+### Read all drinks
+GET http://localhost:3000/films
+
+
+
+### Read all films with a duration of minimum 
+GET http://localhost:3000/films/?minimum-duration=150
+
+### Read a single film 
+GET http://localhost:3000/films/3
+
+### Create a film
+POST http://localhost:3000/films
+Content-Type: application/json
+
+{
+    "title":"The maze runner",
+    "director":"https://the_maze_runner.jpg",
+    "duration":148,
+    "budget":100   
+}
+
+### Delete a film
+DELETE http://localhost:3000/films/2
+
+### Update the film identified by 3
+PATCH http://localhost:3000/films/3
+Content-Type: application/json
+
+{
+    "title":"Harry Potter"
+}
+
+### Put the drink identified by 5
+PUT http://localhost:3000/films/5
+Content-Type: application/json
+
+{
+    "title":"Divergent",
+    "director":"https://divergent.jpg",
+    "duration":178,
+    "budget":108   
+}
+
+### Put the drink identified by 6
+PUT http://localhost:3000/films/6
+Content-Type: application/json
+
+{
+    "title":"TATB",
+    "director":"https://tatb.jpg",
+    "duration":156,
+    "budget":114   
+}
+
+### Try to update film with ID == 2 when missing one expected parameter (director)
+PUT {{baseUrl}}/films/2
+Content-Type: application/json
+
+{
+    "title":"Star Wars: Episode II – Attack of the Clones",
+    "duration": 132,
+    "budget": 115
+}
