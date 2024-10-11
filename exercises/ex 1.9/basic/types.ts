@@ -23,4 +23,12 @@ interface Film {
 
 type NewFilm = Omit<Film, "id">;
 
-export type { Pizza, NewPizza, PizzaToUpdate, Film, NewFilm };
+interface Text {
+  id: string;
+  content: string;
+  level: "easy" | "medium" | "hard";
+}
+
+type NewText = Omit<Text, "id">;
+
+export type { Pizza, NewPizza, PizzaToUpdate, Film, NewFilm, Text, NewText };
