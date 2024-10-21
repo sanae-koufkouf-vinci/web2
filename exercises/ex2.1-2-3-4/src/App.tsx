@@ -1,4 +1,6 @@
 import Cinema from "./components/Cinema/Cinema";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import PageTitle from "./components/PageTitle/PageTitle";
 
 const App = () => {
@@ -56,17 +58,19 @@ const App = () => {
 
   return (
     <div>
+      <Header urlLogo="https://media.istockphoto.com/id/1488301035/fr/photo/acheter-des-billets-de-cin%C3%A9ma.jpg?s=612x612&w=is&k=20&c=7nmdoaLknvCipH2XULcfsLCPO-ky56q1O1FUt97gu2s="> 
+        <p>voici le header de notre site</p>
+      </Header>
       <PageTitle title={pageTitle} />
-
-      <div>
-        <Cinema name={cinema1Name} movies={moviesCinema1}>
+      <Cinema name={cinema1Name} movies={moviesCinema1}>
         </Cinema>
-      </div>
-      <div>
       <Cinema name={cinema2Name} movies={moviesCinema2}  >
       </Cinema>
+      <Footer urlLogo="https://media.istockphoto.com/id/1488301035/fr/photo/acheter-des-billets-de-cin%C3%A9ma.jpg?s=612x612&w=is&k=20&c=7nmdoaLknvCipH2XULcfsLCPO-ky56q1O1FUt97gu2s="> 
+        <p>voici le footer de notre site</p>
+      </Footer>
       </div>
-      </div>
+      
   );
 };
 
