@@ -9,8 +9,13 @@ interface HeaderProps {
 const Header = ({ title, version }: HeaderProps) => {
   const [menuPrinted, setMenuPrinted] = useState(false);
 
+  const handleClick = () => {
+    console.log(`value of menuPrinted before click: ${menuPrinted}`);
+    setMenuPrinted(!menuPrinted);
+  }
+
   return (
-    <header onClick={() => setMenuPrinted(!menuPrinted)}>
+    <header onClick={handleClick}>
       <h1 className="animate__animated animate__bounce">
         {menuPrinted ? `${title}... and rarely do we hate it!` : title}
       </h1>
@@ -18,5 +23,6 @@ const Header = ({ title, version }: HeaderProps) => {
     </header>
   );
 };
+
 
 export default Header;
