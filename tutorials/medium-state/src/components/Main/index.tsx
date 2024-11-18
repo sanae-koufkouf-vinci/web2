@@ -3,7 +3,8 @@ import { SyntheticEvent, useState } from 'react';
 import './Main.css'
 import PizzaMenu from './PizzaMenu';
 import sound from "/src/assets/sounds/Infecticide-11-Pizza-Spinoza.mp3"
-import { Pizza } from '../../types';
+import { NewPizza, Pizza } from '../../types';
+import AddPizza from "./AddPizza";
 
 const defaultPizzas = [
   {
@@ -34,33 +35,12 @@ const defaultPizzas = [
 ];
 
 const Main = () => {
-  const [pizza, setPizza] = useState("");
-  const [description, setDescription] = useState("");
+ 
   const [pizzas, setPizzas] = useState(defaultPizzas);
 
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    console.log("submit:", pizza, description);
-    const newPizza = {
-      id: nextPizzaId(pizzas),
-      title: pizza,
-      content: description,
-    };
-    
-    setPizzas([...pizzas, newPizza]);
-
-  };
-
-  const handlePizzaChange = (e: SyntheticEvent) => {
-    const pizzaInput = e.target as HTMLInputElement;
-    console.log("change in pizzaInput:", pizzaInput.value);
-    setPizza(pizzaInput.value);
-  };
-
-  const handleDescriptionChange = (e: SyntheticEvent) => {
-    const descriptionInput = e.target as HTMLInputElement;
-    console.log("change in descriptionInput:", descriptionInput.value);
-    setDescription(descriptionInput.value);
+  const addPizza = (newPizza:NewPizza) => {   
+    const pizzaAdded = { ...newPizza, id: nextPizzaId(pizzas) };
+    setPizzas([...pizzas, pizzaAdded]);
   };
 
   return (
@@ -77,28 +57,9 @@ const Main = () => {
       <PizzaMenu pizzas={pizzas} />
       <div>
         <br />
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="pizza">Pizza</label>
-          <input
-            value={pizza}
-            type="text"
-            id="pizza"
-            name="pizza"
-            onChange={handlePizzaChange}
-            required
-          />
-          <label htmlFor="description">Description</label>
-          <input
-            value={description}
-            type="text"
-            id="description"
-            name="description"
-            onChange={handleDescriptionChange}
-            required
-          />
-          <button type="submit">Ajouter</button>
-        </form>
+        <AddPizza addPizza={addPizza} />
       </div>
+      
     </main>
   );
 };
