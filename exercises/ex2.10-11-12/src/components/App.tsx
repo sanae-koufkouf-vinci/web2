@@ -4,11 +4,12 @@ import Footer from "./Footer";
 import Header from "./Header";
 import NavBar from "./Navbar";
 import { useState } from "react";
-import { Movie, MovieContext } from "../types";
+import { Movie, MovieContext, newMovie } from "../types";
 
 
 const defaultMovies: Movie[] = [
   {
+    id:1,
     title: "Shang-Chi and the Legend of the Ten Rings",
     director: "Destin Daniel Cretton",
     duration: 132,
@@ -19,6 +20,7 @@ const defaultMovies: Movie[] = [
     budget: 150,
   },
   {
+    id:2,
     title: "The Matrix",
     director: "Lana Wachowski, Lilly Wachowski",
     duration: 136,
@@ -29,6 +31,7 @@ const defaultMovies: Movie[] = [
     budget: 63,
   },
   {
+    id:3,
     title: "Summer Wars",
     director: "Mamoru Hosoda",
     duration: 114,
@@ -39,6 +42,7 @@ const defaultMovies: Movie[] = [
     budget: 18.7,
   },
   {
+    id:4,
     title: "The Meyerowitz Stories",
     director: "Noah Baumbach",
     duration: 112,
@@ -48,6 +52,7 @@ const defaultMovies: Movie[] = [
       "An estranged family gathers together in New York City for an event celebrating the artistic work of their father.",
   },
   {
+    id:5,
     title: "her",
     director: "Spike Jonze",
     duration: 126,
@@ -64,8 +69,11 @@ const App = () => {
   const [movies, setMovies] = useState(defaultMovies);
   const navigate = useNavigate();
 
-  const onMovieAdded=(newMovie:Movie)=>{
-    setMovies([...movies,newMovie]);
+  const onMovieAdded=(newMovie:newMovie)=>{
+    console.log("Movie to add:", newMovie);
+    const nextId = Math.max(...movies.map((movie) => movie.id)) + 1;
+    const movieToBeAdded ={id:nextId, ...newMovie};
+    setMovies([...movies,movieToBeAdded]);
     navigate("/movie-list");
 
   };
