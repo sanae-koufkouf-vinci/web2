@@ -13,10 +13,6 @@ const RandomDog = () =>{
     try{
         const response = await fetch("https://dog.ceo/api/breeds/image/random")
        
-        if (!response.ok)
-            throw new Error(
-              `fetch error : ${response.status} : ${response.statusText}`
-            );
         const data = await response.json();   
         setDog({
             message: data.message ?? "No dog found",
@@ -31,6 +27,8 @@ const RandomDog = () =>{
 
     useEffect(()=>{
      fetchDogImage();
+     const interval = setInterval(fetchDogImage,5000);
+     return () => clearInterval(interval);
 
     },[]);
    

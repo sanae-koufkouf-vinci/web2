@@ -9,24 +9,16 @@ interface Dog {
 }
 
 const App =() => {
-  const [refresh, setRefresh] = useState(false);
+ 
 
   return (
     <>
     <div>
-    <RandomDog key={`${refresh}1`} />
-    <RandomDog key={`${refresh}2`} />
-    <RandomDog key={`${refresh}3`} />
+    <RandomDog  />
+    <RandomDog  />
+    <RandomDog  />
 
-      <button 
-      onClick={()=>setRefresh(!refresh)}
-      style={{
-        marginTop: "20px",
-        padding: "10px 20px",
-        fontSize: "1em",
-        cursor: "pointer",
-      }}
-      > Refresh dog</button>
+     
     </div>
      
     </>
